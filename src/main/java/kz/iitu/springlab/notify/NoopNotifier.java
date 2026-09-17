@@ -1,20 +1,12 @@
 package kz.iitu.springlab.notify;
 
-import org.springframework.context.annotation.Fallback;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Component("noop")
-@Fallback
-@Order(99)
+@Component
 public class NoopNotifier implements Notifier {
-    @Override
-    public String send(String message) {
-        return "noop: " + message;
-    }
 
     @Override
-    public String channel() {
-        return "noop";
+    public String notify(String message) {
+        return "NOOP: " + message;
     }
 }

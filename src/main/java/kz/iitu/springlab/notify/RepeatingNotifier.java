@@ -1,38 +1,20 @@
 package kz.iitu.springlab.notify;
 
-import jakarta.annotation.PostConstruct;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-@Component("repeating")
-@Order(3)
+@Component("repeatingNotifier")
 public class RepeatingNotifier implements Notifier {
 
-    private static final Logger log = LoggerFactory.getLogger(RepeatingNotifier.class);
-
-    @Value("${notifier.repeat-count:2}")
-    private int repeatCount;
-
-    @PostConstruct
-    public void init() {
-        log.info("RepeatingNotifier initialized with repeatCount = {}", repeatCount);
-    }
+    @Value("${lab2.repeating.count:3}")
+    private int count;
 
     @Override
-    public String send(String message) {
-        if (message == null) {
-            return "";
+    public String notify(String message) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            sb.append(message).append(" ");
         }
-        String result = message.repeat(repeatCount);
-        log.info("REPEATING >> {}", result);
-        return "repeating: " + result;
-    }
-
-    @Override
-    public String channel() {
-        return "repeating";
+        return "Repeating (" + count + "): " + sb.toString().trim();
     }
 }

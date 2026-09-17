@@ -2,26 +2,31 @@ package kz.iitu.springlab.lifecycle;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class LifecycleDemo {
 
-    private static final Logger log = LoggerFactory.getLogger(LifecycleDemo.class);
+    private final List<String> events = new ArrayList<>();
 
     public LifecycleDemo() {
-        log.info("1. LifecycleDemo constructor called");
+        events.add("1. Constructor called");
     }
 
     @PostConstruct
     public void init() {
-        log.info("2. LifecycleDemo @PostConstruct method called");
+        events.add("2. @PostConstruct method called");
     }
 
     @PreDestroy
-    public void cleanup() {
-        log.info("3. LifecycleDemo @PreDestroy method called");
+    public void destroy() {
+        events.add("3. @PreDestroy method called");
+    }
+
+    public List<String> getEvents() {
+        return events;
     }
 }

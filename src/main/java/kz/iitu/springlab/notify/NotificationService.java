@@ -2,30 +2,52 @@ package kz.iitu.springlab.notify;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class NotificationService {
-    private final Notifier primary;
-    private final Notifier console;
-    private final List<Notifier> all;
-    private final Map<String, Notifier> byName;
+
+    private final Notifier primaryNotifier;
+    private final Notifier qualifiedNotifier;
+    private final List<Notifier> allNotifiers;
+    private final Map<String, Notifier> notifierMap;
+    private final Notifier repeatingNotifier;
 
     public NotificationService(
-            Notifier primary,
-            @Qualifier("console") Notifier console,
-            List<Notifier> all,
-            Map<String, Notifier> byName) {
-        this.primary = primary;
-        this.console = console;
-        this.all = all;
-        this.byName = byName;
+            Notifier primaryNotifier,
+            @Qualifier("emailNotifier") Notifier qualifiedNotifier,
+            List<Notifier> allNotifiers,
+            Map<String, Notifier> notifierMap,
+            @Qualifier("repeatingNotifier") Notifier repeatingNotifier) {
+        this.primaryNotifier = primaryNotifier;
+        this.qualifiedNotifier = qualifiedNotifier;
+        this.allNotifiers = allNotifiers;
+        this.notifierMap = notifierMap;
+        this.repeatingNotifier = repeatingNotifier;
     }
 
-    public String viaPrimary(String message) { return primary.send(message); }
-    public String viaConsole(String message) { return console.send(message); }
-    public List<String> viaAll(String message) { return all.stream().map(n -> n.send(message)).toList(); }
-    public Set<String> names() { return byName.keySet(); }
+    public String sendViaPrimary(String msg) {
+        return primaryNotifier.notify(msg);
+    }
+
+    public String sendViaQualified(String msg) {
+        return qualifiedNotifier.notify(msg);
+    }
+
+    public List<String> sendViaAll(String msg) {
+        return allNotifiers.stream()
+                .map(n -> n.notify(msg))
+                .collect(Collectors.toList());
+    }
+
+    public String sendViaCustom(String msg) {
+        return repeatingNotifier.notify(msg);
+    }
+
+    public Map<String, Notifier> getNotifierMap() {
+        return notifierMap;
+    }
 }
