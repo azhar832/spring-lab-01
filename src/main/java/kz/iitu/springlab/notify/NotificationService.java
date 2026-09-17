@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,5 +50,10 @@ public class NotificationService {
 
     public Map<String, Notifier> getNotifierMap() {
         return notifierMap;
+    }
+
+    // Добавь этот метод для получения списка имён бинов:
+    public Set<String> getBeanNames() {
+        return notifierMap.keySet();
     }
 }

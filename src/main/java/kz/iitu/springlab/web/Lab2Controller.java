@@ -29,7 +29,8 @@ public class Lab2Controller {
         return Map.of(
                 "primary", notificationService.sendViaPrimary("Hello Primary"),
                 "qualified", notificationService.sendViaQualified("Hello Qualified"),
-                "all", notificationService.sendViaAll("Hello All")
+                "all", notificationService.sendViaAll("Hello All"),
+                "beanNames", notificationService.getBeanNames() // <-- Добавлено
         );
     }
 
