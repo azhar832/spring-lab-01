@@ -6,8 +6,8 @@ app:
     enabled: false
     retry-count: 1
   export:
-    formats: [ "CSV" ]
-    max-rows: 1000
+    formats: [ "PDF", "CSV" ]
+    max-rows: 10000
 
 logging:
   level:

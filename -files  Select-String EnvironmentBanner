@@ -1,0 +1,9 @@
+[33mcommit 3823a95c7bd215e403833ae0a3e2addd9f68eded[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mlab03[m[33m, [m[1;31morigin/lab03[m[33m)[m
+Author: Alimbay Azhar <40801@iitu.edu.kz>
+Date:   Sat Sep 26 19:23:45 2026 +0500
+
+    lab03: completed individual task and actuator config
+
+ src/main/java/config/EnvironmentBanner.java | 32 [32m+++++++++++++++++++++++++++++[m
+ src/main/java/web/ConfigController.java     | 30 [32m++++++++++++++++++++++[m[31m-----[m
+ 2 files changed, 57 insertions(+), 5 deletions(-)
