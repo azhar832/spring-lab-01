@@ -4,6 +4,7 @@ import kz.iitu.springlab.audit.Audited;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -35,13 +36,17 @@ public class CatalogService {
         return "Removed item no. " + id;
     }
 
-    public void removeTwice(long id) {
-        self.remove(id);
-        self.remove(id);
+    public String removeTwice(long id) {
+        String first  = self.remove(id);       // call through the proxy
+        String second = self.remove(id + 1);   // call through the proxy
+        return first + "; " + second;
     }
 
     private void sleep(long ms) {
-        try { Thread.sleep(ms); }
-        catch (InterruptedException e) { Thread.currentThread().interrupt(); }
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

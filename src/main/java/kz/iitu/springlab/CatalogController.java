@@ -35,7 +35,7 @@ public class CatalogController {
     }
 
     @GetMapping("/items")
-    public List<String> getItems(@RequestParam(defaultValue = "3") int limit) {
+    public List<String> getItems(@RequestParam(defaultValue = "5") int limit) {
         return catalogService.findAll(limit);
     }
 
@@ -44,7 +44,7 @@ public class CatalogController {
         return catalogService.remove(id);
     }
 
-    // Удобный дублер для быстрого GET-запроса из браузера для Скриншота 9
+    
     @GetMapping("/delete/{id}")
     public String deleteItemGet(@PathVariable long id) {
         return catalogService.remove(id);
@@ -52,7 +52,6 @@ public class CatalogController {
 
     @GetMapping("/remove-twice/{id}")
     public String removeTwice(@PathVariable long id) {
-        catalogService.removeTwice(id);
-        return "Attempted to remove twice item no. " + id;
+        return catalogService.removeTwice(id);
     }
 }

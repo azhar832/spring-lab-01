@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
 import java.time.Instant;
+import java.util.Arrays;
 
 @Aspect
 @Component
@@ -19,13 +21,16 @@ public class AuditAspect {
     @Around("@annotation(audited)")
     public Object audit(ProceedingJoinPoint pjp, Audited audited) throws Throwable {
         String action = audited.action();
-        log.info("[AUDIT] start {} at {}", action, Instant.now());
+        String args = audited.logArguments()
+                ? " args=" + Arrays.toString(pjp.getArgs())
+                : "";
+        log.info("[AUDIT] start {} at {}{}", action, Instant.now(), args);
         try {
             Object result = pjp.proceed();
-            log.info("[AUDIT] {} success", action);
+            log.info("[AUDIT] {} success at {}", action, Instant.now());
             return result;
         } catch (Throwable ex) {
-            log.error("[AUDIT] {} failure: {}", action, ex.getMessage());
+            log.error("[AUDIT] {} failure at {}: {}", action, Instant.now(), ex.getMessage());
             throw ex;
         }
     }
