@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration</title>
+</head>
+<body>
+<p>Logged in as <b sec:authentication="name">anonymous</b>,
+   authorities: <span sec:authentication="principal.authorities">[ROLE_USER]</span></p>
+
+<h1>Users</h1>
+<table border="1" cellpadding="4">
+    <tr><th>ID</th><th>Username</th><th>Roles</th><th>Enabled</th><th>Failed attempts</th><th>Locked</th><th>Action</th></tr>
+    <tr th:each="u : ${users}">
+        <td th:text="${u.id}">1</td>
+        <td th:text="${u.username}">name</td>
+        <td th:text="${u.roles}">[USER]</td>
+        <td th:text="${u.enabled}">true</td>
+        <td th:text="${u.failedAttempts}">0</td>
+        <td th:text="${u.locked}">false</td>
+        <td>
+            <form th:action="@{/admin/users/{id}/unlock(id=${u.id})}" method="post">
+                <button type="submit">Unlock</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<p><a th:href="@{/books}">Books</a></p>
+
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Log out</button>
+</form>
+</body>
+</html>
