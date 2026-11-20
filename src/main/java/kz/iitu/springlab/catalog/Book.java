@@ -1,3 +1,5 @@
 package kz.iitu.springlab.catalog;
 
-public record Book(Long id, String title, String author, int year) { }
+import jakarta.validation.constraints.NotBlank;
+
+public record Book(Long id, @NotBlank String title, String author, int year) { }

@@ -40,7 +40,7 @@ public class BookRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Book> create(@RequestBody Book book) {
+    public ResponseEntity<Book> create(@jakarta.validation.Valid @RequestBody Book book) {
         Book saved = service.create(book);
         return ResponseEntity
                 .created(URI.create("/api/books/" + saved.id()))
